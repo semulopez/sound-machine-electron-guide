@@ -2,12 +2,12 @@
 
 var app = require('app');
 var BrowserWindow = require('browser-window');
-var globalShortcut = require('global-shortcut');
-var configuration = require('./configuration');
-var ipc = require('ipc');
 
 var mainWindow = null;
-var settingsWindow = null;
+
+var globalShortcut = require('global-shortcut');
+
+var configuration = require('./configuration');
 
 app.on('ready', function() {
     if (!configuration.readSettings('shortcutKeys')) {
@@ -40,9 +40,13 @@ function setGlobalShortcuts() {
     });
 }
 
+var ipc = require('ipc');
+
 ipc.on('close-main-window', function () {
     app.quit();
 });
+
+var settingsWindow = null;
 
 ipc.on('open-settings-window', function () {
     if (settingsWindow) {

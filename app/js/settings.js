@@ -1,14 +1,15 @@
 'use strict';
 
 var ipc = require('ipc');
-var configuration = require('../configuration');
 
-var modifierCheckboxes = document.querySelectorAll('.global-shortcut');
 var closeEl = document.querySelector('.close');
-
 closeEl.addEventListener('click', function (e) {
     ipc.send('close-settings-window');
 });
+
+var configuration = require('../configuration');
+
+var modifierCheckboxes = document.querySelectorAll('.global-shortcut');
 
 for (var i = 0; i < modifierCheckboxes.length; i++) {
     var shortcutKeys = configuration.readSettings('shortcutKeys');

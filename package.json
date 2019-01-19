@@ -1,13 +1,25 @@
 {
   "name": "sound_machine",
   "version": "0.1.0",
+  "description": "Electron tutorial app",
+  "author": "SJML <semulopez@gmail.com>",
   "main": "./main.js",
   "scripts": {
     "start": "electron .",
-    "package": "electron-packager ./ SoundMachine --all --out ~/Desktop/SoundMachine --version 0.30.2 --overwrite --icon=./app/img/app-icon.icns"
+    "package": "electron-packager ./ SoundMachine --asar=true --platform=win32 --arch=all --out D:/Electron/SoundMachine --electron-version 0.30.2 --overwrite --icon=./app/img/app-icon.icns",
+    "pack": "build --dir",
+    "dist": "build"
+  },
+  "build": {
+    "appId": "com.tutorial.SoundMachine",
+    "win": {
+      "target": "nsis",
+      "icon": "./app/img/app-icon.icns"
+    }
   },
   "devDependencies": {
-    "electron-packager": "^5.0.1",
+    "electron-builder": "^20.38.5",
+    "electron-packager": "^13.0.1",
     "electron-prebuilt": "^0.30.3"
   },
   "dependencies": {

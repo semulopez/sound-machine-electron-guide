@@ -1,17 +1,6 @@
 'use strict';
 
-var ipc = require('ipc');
-var remote = require('remote');
-var Tray = remote.require('tray');
-var Menu = remote.require('menu');
-var path = require('path');
-
 var soundButtons = document.querySelectorAll('.button-sound');
-var closeEl = document.querySelector('.close');
-var settingsEl = document.querySelector('.settings');
-
-var trayIcon = null;
-var trayMenu = null;
 
 for (var i = 0; i < soundButtons.length; i++) {
     var soundButton = soundButtons[i];
@@ -30,18 +19,28 @@ function prepareButton(buttonEl, soundName) {
     });
 }
 
+var ipc = require('ipc');
+
+var closeEl = document.querySelector('.close');
 closeEl.addEventListener('click', function () {
     ipc.send('close-main-window');
-});
-
-settingsEl.addEventListener('click', function () {
-    ipc.send('open-settings-window');
 });
 
 ipc.on('global-shortcut', function (arg) {
     var event = new MouseEvent('click');
     soundButtons[arg].dispatchEvent(event);
 });
+
+var settingsEl = document.querySelector('.settings');
+settingsEl.addEventListener('click', function () {
+    ipc.send('open-settings-window');
+});
+ var remote = require('remote');
+var Tray = remote.require('tray');
+var Menu = remote.require('menu');
+var path = require('path');
+
+var trayIcon = null;
 
 if (process.platform === 'darwin') {
     trayIcon = new Tray(path.join(__dirname, 'img/tray-iconTemplate.png'));
@@ -68,5 +67,5 @@ var trayMenuTemplate = [
         }
     }
 ];
-trayMenu = Menu.buildFromTemplate(trayMenuTemplate);
+var trayMenu = Menu.buildFromTemplate(trayMenuTemplate);
 trayIcon.setContextMenu(trayMenu);
